@@ -12,8 +12,8 @@ from reportlab.lib.pagesizes import A4
 app = Flask(__name__)
 
 # ---------------- TELEGRAM ----------------
-BOT_TOKEN = "8716076962:AAHpIFuyq7Jq51Gy4Dj9PsPexClS-v04-Oo"
-CHAT_ID = "723175483"
+BOT_TOKEN = "123456:ABCDEF"
+CHAT_ID = "123456789"
 
 def telegram(msg):
     try:
@@ -85,7 +85,7 @@ def generate_booking_id():
 
 # ---------------- PDF ----------------
 def generate_pdf(booking_id, name, phone, plate, date, car, color, wrap, wash, extras, total):
-    folder = os.path.join(BASE_DIR, "static", "invoices")
+    folder = os.path.join(BASE_DIR, "static", "invoices_private")
     os.makedirs(folder, exist_ok=True)
 
     file_path = os.path.join(folder, f"{booking_id}.pdf")
@@ -115,7 +115,7 @@ def generate_pdf(booking_id, name, phone, plate, date, car, color, wrap, wash, e
     ]
 
     doc.build(content)
-    return f"/static/invoices/{booking_id}.pdf"
+    return f"/static/invoices_private/{booking_id}.pdf"
 
 
 # ---------------- ROUTES ----------------
@@ -178,7 +178,7 @@ def book():
         car, color, wrap, wash, extras, total
     )
 
-    # ---------------- TELEGRAM ----------------
+    # ---------------- TELEGRAM (TEXT ONLY) ----------------
     telegram(f"""
 🦈 NEW BOOKING
 
@@ -195,17 +195,66 @@ Wash: {wash}
 Extras: {extras}
 
 TOTAL: RM {total}
-
-📄 PDF: {pdf_url}
 """)
 
-    # ---------------- AUTO OPEN PDF ----------------
+    # ---------------- USER SUCCESS PAGE ----------------
     return f"""
-    <script>
-        window.open("{pdf_url}", "_blank");
-        window.location.href = "/";
-    </script>
-    """
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Success</title>
+    <style>
+        body {{
+            font-family: Arial;
+            background: #0f0f0f;
+            color: white;
+            text-align: center;
+            padding-top: 80px;
+        }}
+
+        .box {{
+            background: #1b1b1b;
+            display: inline-block;
+            padding: 30px;
+            border-radius: 10px;
+        }}
+
+        a.button {{
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            background: #1f6aa5;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }}
+
+        a.button:hover {{
+            background: #1590ff;
+        }}
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>✔ Booking Successful</h2>
+    <p><b>Booking ID:</b> {booking_id}</p>
+
+    <a class="button" href="{pdf_url}" download>
+        📄 Download Receipt PDF
+    </a>
+
+    <br><br>
+
+    <a class="button" href="/">
+        🔙 Back to Home
+    </a>
+</div>
+
+</body>
+</html>
+"""
 
 
 # ---------------- RUN ----------------

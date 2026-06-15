@@ -85,12 +85,12 @@ def generate_booking_id():
 
 # ---------------- PDF ----------------
 def generate_pdf(booking_id, name, phone, plate, date, car, color, wrap, wash, extras, total):
-    folder = os.path.join(BASE_DIR, "invoices")
+    folder = os.path.join(BASE_DIR, "static", "invoices")
     os.makedirs(folder, exist_ok=True)
 
-    filename = os.path.join(folder, f"{booking_id}.pdf")
+    file_path = os.path.join(folder, f"{booking_id}.pdf")
 
-    doc = SimpleDocTemplate(filename, pagesize=A4)
+    doc = SimpleDocTemplate(file_path, pagesize=A4)
     styles = getSampleStyleSheet()
 
     content = [
@@ -115,7 +115,7 @@ def generate_pdf(booking_id, name, phone, plate, date, car, color, wrap, wash, e
     ]
 
     doc.build(content)
-    return filename
+    return f"/static/invoices/{booking_id}.pdf"
 
 
 # ---------------- ROUTES ----------------
@@ -173,7 +173,7 @@ def book():
     conn.commit()
 
     # ---------------- PDF ----------------
-    pdf_file = generate_pdf(
+    pdf_url = generate_pdf(
         booking_id, name, phone, plate, date,
         car, color, wrap, wash, extras, total
     )
@@ -196,10 +196,16 @@ Extras: {extras}
 
 TOTAL: RM {total}
 
-📄 PDF: {pdf_file}
+📄 PDF: {pdf_url}
 """)
 
-    return f"✔ Booking successful! ID: {booking_id}"
+    # ---------------- AUTO OPEN PDF ----------------
+    return f"""
+    <script>
+        window.open("{pdf_url}", "_blank");
+        window.location.href = "/";
+    </script>
+    """
 
 
 # ---------------- RUN ----------------

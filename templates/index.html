@@ -67,16 +67,16 @@
             margin-bottom: 6px;
         }
 
-        #msg {
-            text-align: center;
-            color: lightgreen;
-            margin: 10px;
-        }
-
         .status {
             white-space: pre-line;
             font-size: 13px;
             color: #ccc;
+        }
+
+        #msg {
+            text-align: center;
+            color: lightgreen;
+            margin: 10px;
         }
     </style>
 </head>
@@ -94,6 +94,7 @@
 
         <form action="/book" method="POST">
 
+            <!-- CUSTOMER INFO -->
             <div class="box">
                 <h3>Customer Info</h3>
 
@@ -105,8 +106,9 @@
                 <input type="date" name="date" required>
             </div>
 
+            <!-- CAR OPTIONS -->
             <div class="box">
-                <h3>Car Selection</h3>
+                <h3>Car Options</h3>
 
                 <label>Car Type</label>
                 <select name="car">
@@ -137,6 +139,7 @@
                 </select>
             </div>
 
+            <!-- EXTRAS -->
             <div class="box extras">
                 <h3>Extras</h3>
 
@@ -148,7 +151,7 @@
                 {% endfor %}
             </div>
 
-            <button type="submit" onclick="showMsg()">💰 Confirm Booking</button>
+            <button type="submit">💰 Confirm Booking</button>
 
         </form>
 
@@ -162,19 +165,28 @@
             <div class="status">
 ✔ Booking System Active
 ✔ Telegram Alerts ON
-✔ PDF Receipt Generator Active
+✔ PDF Receipt System Active
 ✔ SQLite Database Connected
-✔ Max 5 bookings/day
+✔ Render Deployment Ready
             </div>
         </div>
 
         <div class="box">
             <h3>After Booking</h3>
             <div class="status">
-✔ Booking saved
+✔ Booking saved to database
 ✔ Telegram notification sent
-✔ PDF receipt auto-opens
-✔ Stored in server database
+✔ PDF receipt generated
+✔ Download button shown to user
+            </div>
+        </div>
+
+        <div class="box">
+            <h3>Notes</h3>
+            <div class="status">
+- Use correct phone number
+- Plate must be valid
+- One booking per submission
             </div>
         </div>
 

@@ -1,1 +1,0 @@
-cur.execute("""CREATE TABLE IF NOT EXISTS orders(id INTEGER PRIMARY KEY AUTOINCREMENT,booking_id TEXT,name TEXT,phone TEXT,plate TEXT,appointment_date TEXT,car_type TEXT,color TEXT,wrap_type TEXT,wash_type TEXT,extras TEXT,total REAL,created_at TEXT)""")

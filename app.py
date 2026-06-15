@@ -12,8 +12,8 @@ from reportlab.lib.pagesizes import A4
 app = Flask(__name__)
 
 # ---------------- TELEGRAM ----------------
-BOT_TOKEN = "123456:ABCDEF"
-CHAT_ID = "123456789"
+BOT_TOKEN = "8716076962:AAHpIFuyq7Jq51Gy4Dj9PsPexClS-v04-Oo"
+CHAT_ID = "723175483"
 
 def telegram(msg):
     try:

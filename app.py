@@ -5,6 +5,10 @@ import os
 import random
 import requests
 
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.pagesizes import A4
+
 app = Flask(__name__)
 
 # ---------------- TELEGRAM ----------------
@@ -20,6 +24,7 @@ def telegram(msg):
     except:
         pass
 
+
 # ---------------- CONFIG ----------------
 CAR_TYPES = {"Sedan": 2000, "SUV": 2800, "Sport": 3500}
 WRAP_TYPES = {"Matte": 500, "Glossy": 400, "Chrome": 900}
@@ -30,7 +35,8 @@ COLORS = {"Black": 0, "White": 0, "Red": 100, "Blue": 100}
 BLOCKED_DATES = {"2026-01-01", "2026-02-10"}
 MAX_BOOKINGS_PER_DAY = 5
 
-# ---------------- DB PATH ----------------
+
+# ---------------- DB ----------------
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.path.join(BASE_DIR, "orders.db")
 
@@ -56,10 +62,12 @@ created_at TEXT
 """)
 conn.commit()
 
+
 # ---------------- HELPERS ----------------
 def count_bookings(date):
     cur.execute("SELECT COUNT(*) FROM orders WHERE appointment_date=?", (date,))
     return cur.fetchone()[0]
+
 
 def calculate_total(car, color, wrap, wash, extras):
     total = 0
@@ -67,17 +75,54 @@ def calculate_total(car, color, wrap, wash, extras):
     total += COLORS.get(color, 0)
     total += WRAP_TYPES.get(wrap, 0)
     total += WASH.get(wash, 0)
-    for e in extras:
-        total += EXTRAS.get(e, 0)
+    total += sum(EXTRAS.get(e, 0) for e in extras)
     return total
+
 
 def generate_booking_id():
     return f"MS-{datetime.now().strftime('%Y%m%d')}-{random.randint(1000,9999)}"
 
+
+# ---------------- PDF ----------------
+def generate_pdf(booking_id, name, phone, plate, date, car, color, wrap, wash, extras, total):
+    folder = os.path.join(BASE_DIR, "invoices")
+    os.makedirs(folder, exist_ok=True)
+
+    filename = os.path.join(folder, f"{booking_id}.pdf")
+
+    doc = SimpleDocTemplate(filename, pagesize=A4)
+    styles = getSampleStyleSheet()
+
+    content = [
+        Paragraph("🦈 6ixNine9 Motorsport Receipt", styles["Title"]),
+        Spacer(1, 12),
+
+        Paragraph(f"<b>Booking ID:</b> {booking_id}", styles["Normal"]),
+        Paragraph(f"<b>Name:</b> {name}", styles["Normal"]),
+        Paragraph(f"<b>Phone:</b> {phone}", styles["Normal"]),
+        Paragraph(f"<b>Plate:</b> {plate}", styles["Normal"]),
+        Paragraph(f"<b>Date:</b> {date}", styles["Normal"]),
+        Spacer(1, 12),
+
+        Paragraph(f"<b>Car:</b> {car}", styles["Normal"]),
+        Paragraph(f"<b>Color:</b> {color}", styles["Normal"]),
+        Paragraph(f"<b>Wrap:</b> {wrap}", styles["Normal"]),
+        Paragraph(f"<b>Wash:</b> {wash}", styles["Normal"]),
+        Paragraph(f"<b>Extras:</b> {', '.join(extras) if extras else 'None'}", styles["Normal"]),
+
+        Spacer(1, 12),
+        Paragraph(f"<b>Total: RM {total}</b>", styles["Title"]),
+    ]
+
+    doc.build(content)
+    return filename
+
+
 # ---------------- ROUTES ----------------
 @app.route("/")
 def home():
-    return render_template("index.html",
+    return render_template(
+        "index.html",
         cars=CAR_TYPES,
         colors=COLORS,
         wraps=WRAP_TYPES,
@@ -85,6 +130,7 @@ def home():
         extras=EXTRAS,
         blocked=BLOCKED_DATES
     )
+
 
 @app.route("/book", methods=["POST"])
 def book():
@@ -97,19 +143,19 @@ def book():
     color = request.form["color"]
     wrap = request.form["wrap"]
     wash = request.form["wash"]
-
     extras = request.form.getlist("extras")
 
     # ---------------- VALIDATION ----------------
     if date in BLOCKED_DATES:
-        return "Date blocked"
+        return "❌ Date blocked"
 
     if count_bookings(date) >= MAX_BOOKINGS_PER_DAY:
-        return "Fully booked"
+        return "❌ Fully booked"
 
     total = calculate_total(car, color, wrap, wash, extras)
     booking_id = generate_booking_id()
 
+    # ---------------- SAVE DB ----------------
     cur.execute("""
     INSERT INTO orders(
         booking_id, name, phone, plate,
@@ -124,12 +170,17 @@ def book():
         wrap, wash, ",".join(extras),
         total, datetime.now().isoformat()
     ))
-
     conn.commit()
 
-    # ---------------- TELEGRAM ALERT ----------------
-    telegram(
-        f"""🦈 NEW BOOKING
+    # ---------------- PDF ----------------
+    pdf_file = generate_pdf(
+        booking_id, name, phone, plate, date,
+        car, color, wrap, wash, extras, total
+    )
+
+    # ---------------- TELEGRAM ----------------
+    telegram(f"""
+🦈 NEW BOOKING
 
 ID: {booking_id}
 Name: {name}
@@ -144,11 +195,14 @@ Wash: {wash}
 Extras: {extras}
 
 TOTAL: RM {total}
-"""
-    )
 
-    return f"Booking successful ✔ ID: {booking_id}"
+📄 PDF: {pdf_file}
+""")
+
+    return f"✔ Booking successful! ID: {booking_id}"
+
 
 # ---------------- RUN ----------------
 if __name__ == "__main__":
-    app.run()
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>6ixNine9 Motorsport</title>
+    <title>6ixNine9 Motorsport Booking</title>
 
     <style>
         body {
@@ -12,8 +12,8 @@
         }
 
         .header {
-            padding: 15px;
             text-align: center;
+            padding: 15px;
             background: #1c1c1c;
             font-size: 22px;
             font-weight: bold;
@@ -32,8 +32,8 @@
         .box {
             background: #1b1b1b;
             padding: 15px;
-            margin-bottom: 15px;
             border-radius: 10px;
+            margin-bottom: 15px;
         }
 
         input, select {
@@ -51,11 +51,11 @@
             width: 100%;
             padding: 12px;
             background: #1f6aa5;
-            color: white;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
+            color: white;
             font-weight: bold;
+            cursor: pointer;
         }
 
         button:hover {
@@ -67,17 +67,16 @@
             margin-bottom: 6px;
         }
 
-        .status {
-            background: #111;
-            padding: 15px;
-            border-radius: 10px;
-            white-space: pre-line;
-            font-size: 14px;
+        #msg {
+            text-align: center;
+            color: lightgreen;
+            margin: 10px;
         }
 
-        .small {
-            font-size: 12px;
-            color: #aaa;
+        .status {
+            white-space: pre-line;
+            font-size: 13px;
+            color: #ccc;
         }
     </style>
 </head>
@@ -86,6 +85,8 @@
 
 <div class="header">🦈 6ixNine9 Motorsport Booking System</div>
 
+<div id="msg"></div>
+
 <div class="container">
 
     <!-- LEFT PANEL -->
@@ -93,19 +94,17 @@
 
         <form action="/book" method="POST">
 
-            <!-- CUSTOMER INFO -->
             <div class="box">
                 <h3>Customer Info</h3>
 
                 <input name="name" placeholder="Customer Name" required>
                 <input name="phone" placeholder="Phone Number" required>
-                <input name="plate" placeholder="Car Plate Number" required>
+                <input name="plate" placeholder="Car Plate" required>
 
-                <label class="small">Appointment Date</label>
+                <label>Appointment Date</label>
                 <input type="date" name="date" required>
             </div>
 
-            <!-- CAR OPTIONS -->
             <div class="box">
                 <h3>Car Selection</h3>
 
@@ -130,7 +129,7 @@
                     {% endfor %}
                 </select>
 
-                <label>Wash Package</label>
+                <label>Wash Type</label>
                 <select name="wash">
                     {% for k,v in washes.items() %}
                     <option value="{{k}}">{{k}}</option>
@@ -138,7 +137,6 @@
                 </select>
             </div>
 
-            <!-- EXTRAS -->
             <div class="box extras">
                 <h3>Extras</h3>
 
@@ -150,7 +148,7 @@
                 {% endfor %}
             </div>
 
-            <button type="submit">💰 Confirm Booking</button>
+            <button type="submit" onclick="showMsg()">💰 Confirm Booking</button>
 
         </form>
 
@@ -160,40 +158,36 @@
     <div class="right">
 
         <div class="box">
-            <h3>📋 System Info</h3>
+            <h3>System Status</h3>
             <div class="status">
 ✔ Booking System Active
-✔ SQLite Database Connected
-✔ Telegram Notifications ON
+✔ Telegram Alerts ON
 ✔ PDF Receipt Generator Active
-✔ Max 5 bookings per day enforced
+✔ SQLite Database Connected
+✔ Max 5 bookings/day
             </div>
         </div>
 
         <div class="box">
-            <h3>📦 After Booking</h3>
+            <h3>After Booking</h3>
             <div class="status">
-You will receive:
-
-✔ Booking ID
-✔ Telegram alert
-✔ PDF receipt saved on server
-✔ Booking stored in database
-            </div>
-        </div>
-
-        <div class="box">
-            <h3>⚠ Notes</h3>
-            <div class="status">
-- Do NOT refresh during booking
-- Use correct phone number
-- Plate number must be valid
+✔ Booking saved
+✔ Telegram notification sent
+✔ PDF receipt auto-opens
+✔ Stored in server database
             </div>
         </div>
 
     </div>
 
 </div>
+
+<script>
+function showMsg() {
+    document.getElementById("msg").innerText =
+        "Processing booking... please wait ⏳";
+}
+</script>
 
 </body>
 </html>

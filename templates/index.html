@@ -1,21 +1,184 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>6ixNine9 Booking</title>
+    <title>6ixNine9 Motorsport</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #0f0f0f;
+            color: white;
+        }
+
+        .header {
+            padding: 15px;
+            background: #1c1c1c;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: flex;
+            height: 90vh;
+        }
+
+        .left, .right {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .box {
+            background: #1b1b1b;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #1f6aa5;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: #1590ff;
+        }
+
+        .extras button {
+            background: #2b2b2b;
+        }
+
+        .extras button.active {
+            background: #1f6aa5;
+        }
+
+        .summary {
+            background: #111;
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-line;
+        }
+    </style>
 </head>
-<body style="font-family:Arial; padding:20px;">
 
-<h2>6ixNine9 Motorsport Booking</h2>
+<body>
 
-<form action="/book" method="POST">
+<div class="header">🦈 6ixNine9 Motorsport</div>
 
-    <input name="name" placeholder="Name" required><br><br>
-    <input name="phone" placeholder="Phone" required><br><br>
-    <input name="plate" placeholder="Car Plate" required><br><br>
+<div class="container">
 
-    <button type="submit">BOOK NOW</button>
+    <!-- LEFT PANEL -->
+    <div class="left">
 
-</form>
+        <form action="/book" method="POST">
+
+            <div class="box">
+                <label>Name</label>
+                <input name="name" required>
+
+                <label>Phone</label>
+                <input name="phone" required>
+
+                <label>Car Plate</label>
+                <input name="plate" required>
+            </div>
+
+            <div class="box">
+                <label>Appointment Date</label>
+                <input type="date" name="date" required>
+            </div>
+
+            <div class="box">
+                <label>Car Type</label>
+                <select name="car">
+                    {% for k,v in cars.items() %}
+                        <option value="{{k}}">{{k}}</option>
+                    {% endfor %}
+                </select>
+
+                <label>Color</label>
+                <select name="color">
+                    {% for k,v in colors.items() %}
+                        <option value="{{k}}">{{k}}</option>
+                    {% endfor %}
+                </select>
+
+                <label>Wrap</label>
+                <select name="wrap">
+                    {% for k,v in wraps.items() %}
+                        <option value="{{k}}">{{k}}</option>
+                    {% endfor %}
+                </select>
+
+                <label>Wash</label>
+                <select name="wash">
+                    {% for k,v in washes.items() %}
+                        <option value="{{k}}">{{k}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="box extras">
+                <label>Extras</label>
+
+                {% for k,v in extras.items() %}
+                    <label>
+                        <input type="checkbox" name="extras" value="{{k}}">
+                        {{k}} (RM{{v}})
+                    </label><br>
+                {% endfor %}
+            </div>
+
+            <button type="submit">💰 Checkout</button>
+
+        </form>
+
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right">
+
+        <div class="box">
+            <h3>📋 Summary Preview</h3>
+            <p>
+This is your POS system preview.
+After booking, Telegram will receive full details:
+✔ Name
+✔ Phone
+✔ Plate
+✔ Car
+✔ Wrap
+✔ Wash
+✔ Extras
+✔ Total
+            </p>
+        </div>
+
+        <div class="box">
+            <h3>⚡ System Status</h3>
+            <p>✔ Booking System Active</p>
+            <p>✔ Telegram Alerts ON</p>
+            <p>✔ SQLite Database Connected</p>
+        </div>
+
+    </div>
+
+</div>
 
 </body>
 </html>

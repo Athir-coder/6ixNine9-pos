@@ -27,9 +27,8 @@ def telegram(msg):
 
 # ---------------- CONFIG ----------------
 CAR_TYPES = {"Sedan": 2000, "MPV": 2300}
-BRAND = {"KTN": 500, "NAKA FILM PET": 1000}
+BRAND = {"KTN": 500, "NAKA FILM PET": 1000, "No": 0}
 WASH = {"Basic Wash": 10, "Premium Wash": 20, "Full Detail": 40}
-EXTRAS = {"Roof Wrap": 300, "Rim Wrap": 250, "Interior Trim": 200}
 COLORS = {"Black": 0, "White": 0, "Red": 100, "Blue": 100}
 
 BLOCKED_DATES = {"2026-01-01", "2026-02-10"}
@@ -55,7 +54,6 @@ car_type TEXT,
 color TEXT,
 brand TEXT,
 wash_type TEXT,
-extras TEXT,
 total REAL,
 created_at TEXT
 )
@@ -69,13 +67,12 @@ def count_bookings(date):
     return cur.fetchone()[0]
 
 
-def calculate_total(car, color, brand, wash, extras):
+def calculate_total(car, color, brand, wash):
     total = 0
     total += CAR_TYPES.get(car, 0)
     total += COLORS.get(color, 0)
     total += BRAND.get(brand, 0)
     total += WASH.get(wash, 0)
-    total += sum(EXTRAS.get(e, 0) for e in extras)
     return total
 
 
@@ -84,7 +81,7 @@ def generate_booking_id():
 
 
 # ---------------- PDF ----------------
-def generate_pdf(booking_id, name, phone, plate, date, car, color, brand, wash, extras, total):
+def generate_pdf(booking_id, name, phone, plate, date, car, color, brand, wash, total):
     folder = os.path.join(BASE_DIR, "static", "invoices_private")
     os.makedirs(folder, exist_ok=True)
 
@@ -108,7 +105,6 @@ def generate_pdf(booking_id, name, phone, plate, date, car, color, brand, wash, 
         Paragraph(f"<b>Color:</b> {color}", styles["Normal"]),
         Paragraph(f"<b>Brand:</b> {brand}", styles["Normal"]),
         Paragraph(f"<b>Wash:</b> {wash}", styles["Normal"]),
-        Paragraph(f"<b>Extras:</b> {', '.join(extras) if extras else 'None'}", styles["Normal"]),
 
         Spacer(1, 12),
         Paragraph(f"<b>Total: RM {total}</b>", styles["Title"]),
@@ -127,7 +123,6 @@ def home():
         colors=COLORS,
         brand=BRAND,
         washes=WASH,
-        extras=EXTRAS,
         blocked=BLOCKED_DATES
     )
 
@@ -143,7 +138,6 @@ def book():
     color = request.form["color"]
     brand = request.form["brand"]
     wash = request.form["wash"]
-    extras = request.form.getlist("extras")
 
     # ---------------- VALIDATION ----------------
     if date in BLOCKED_DATES:
@@ -152,7 +146,7 @@ def book():
     if count_bookings(date) >= MAX_BOOKINGS_PER_DAY:
         return "❌ Fully booked"
 
-    total = calculate_total(car, color, brand, wash, extras)
+    total = calculate_total(car, color, brand, wash)
     booking_id = generate_booking_id()
 
     # ---------------- SAVE DB ----------------
@@ -160,14 +154,14 @@ def book():
     INSERT INTO orders(
         booking_id, name, phone, plate,
         appointment_date, car_type, color,
-        brand, wash_type, extras,
+        brand, wash_type,
         total, created_at
     )
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?)
     """, (
         booking_id, name, phone, plate,
         date, car, color,
-        brand, wash, ",".join(extras),
+        brand, wash,
         total, datetime.now().isoformat()
     ))
     conn.commit()
@@ -175,10 +169,10 @@ def book():
     # ---------------- PDF ----------------
     pdf_url = generate_pdf(
         booking_id, name, phone, plate, date,
-        car, color, brand, wash, extras, total
+        car, color, brand, wash, total
     )
 
-    # ---------------- TELEGRAM (TEXT ONLY) ----------------
+    # ---------------- TELEGRAM ----------------
     telegram(f"""
 🦈 NEW BOOKING
 
@@ -192,12 +186,11 @@ Car: {car}
 Color: {color}
 Brand: {brand}
 Wash: {wash}
-Extras: {extras}
 
 TOTAL: RM {total}
 """)
 
-    # ---------------- USER SUCCESS PAGE ----------------
+    # ---------------- SUCCESS PAGE ----------------
     return f"""
 <!DOCTYPE html>
 <html>
@@ -211,14 +204,12 @@ TOTAL: RM {total}
             text-align: center;
             padding-top: 80px;
         }}
-
         .box {{
             background: #1b1b1b;
             display: inline-block;
             padding: 30px;
             border-radius: 10px;
         }}
-
         a.button {{
             display: inline-block;
             margin-top: 20px;
@@ -228,13 +219,8 @@ TOTAL: RM {total}
             text-decoration: none;
             border-radius: 5px;
         }}
-
-        a.button:hover {{
-            background: #1590ff;
-        }}
     </style>
 </head>
-
 <body>
 
 <div class="box">

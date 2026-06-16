@@ -26,8 +26,8 @@ def telegram(msg):
 
 
 # ---------------- CONFIG ----------------
-CAR_TYPES = {"Sedan": 2000, "SUV": 2800, "Sport": 3500}
-WRAP_TYPES = {"Matte": 500, "Glossy": 400, "Chrome": 900}
+CAR_TYPES = {"Sedan": 2000, "MPV": 2800}
+BRAND = {"KTN": 500, "NAKA FILM PET": 400}
 WASH = {"Basic Wash": 10, "Premium Wash": 20, "Full Detail": 40}
 EXTRAS = {"Roof Wrap": 300, "Rim Wrap": 250, "Interior Trim": 200}
 COLORS = {"Black": 0, "White": 0, "Red": 100, "Blue": 100}

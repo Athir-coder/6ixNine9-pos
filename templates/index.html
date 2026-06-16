@@ -131,14 +131,19 @@
                     {% endfor %}
                 </select>
 
-                <label>Wash Type</label>
-                <select name="wash">
-                    {% for k,v in washes.items() %}
-                    <option value="{{k}}">{{k}}</option>
-                    {% endfor %}
-                </select>
             </div>
 
+<div class="box">
+    <h3>Wash Service</h3>
+
+    <label>Wash Type</label>
+    <select name="wash">
+        {% for k,v in washes.items() %}
+        <option value="{{k}}">{{k}}</option>
+        {% endfor %}
+    </select>
+</div>
+            
             <button type="submit">💰 Confirm Booking</button>
 
         </form>

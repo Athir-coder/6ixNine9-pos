@@ -69,7 +69,7 @@ def count_bookings(date):
     return cur.fetchone()[0]
 
 
-def calculate_total(car, color, wrap, wash, extras):
+def calculate_total(car, color, brand, wash, extras):
     total = 0
     total += CAR_TYPES.get(car, 0)
     total += COLORS.get(color, 0)

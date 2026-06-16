@@ -119,14 +119,14 @@
 
                 <label>Brand</brand>
                 <select name="brand">
-                    {% for k,v in colors.items() %}
+                    {% for k,v in brand.items() %}
                     <option value="{{k}}">{{k}}</option>
                     {% endfor %}
                 </select>
 
                 <label>Color</color>
                 <select name="color">
-                    {% for k,v in brand.items() %}
+                    {% for k,v in colors.items() %}
                     <option value="{{k}}">{{k}}</option>
                     {% endfor %}
                 </select>

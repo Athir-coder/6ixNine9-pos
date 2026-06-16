@@ -73,7 +73,7 @@ def calculate_total(car, color, brand, wash, extras):
     total = 0
     total += CAR_TYPES.get(car, 0)
     total += COLORS.get(color, 0)
-    total += BRAND.get(wrap, 0)
+    total += BRAND.get(brand, 0)
     total += WASH.get(wash, 0)
     total += sum(EXTRAS.get(e, 0) for e in extras)
     return total
@@ -152,7 +152,7 @@ def book():
     if count_bookings(date) >= MAX_BOOKINGS_PER_DAY:
         return "❌ Fully booked"
 
-    total = calculate_total(car, color, wrap, wash, extras)
+    total = calculate_total(car, color, brand, wash, extras)
     booking_id = generate_booking_id()
 
     # ---------------- SAVE DB ----------------

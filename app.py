@@ -106,7 +106,7 @@ def generate_pdf(booking_id, name, phone, plate, date, car, color, wrap, wash, e
 
         Paragraph(f"<b>Car:</b> {car}", styles["Normal"]),
         Paragraph(f"<b>Color:</b> {color}", styles["Normal"]),
-        Paragraph(f"<b>Wrap:</b> {wrap}", styles["Normal"]),
+        Paragraph(f"<b>Brand:</b> {brand}", styles["Normal"]),
         Paragraph(f"<b>Wash:</b> {wash}", styles["Normal"]),
         Paragraph(f"<b>Extras:</b> {', '.join(extras) if extras else 'None'}", styles["Normal"]),
 
@@ -125,7 +125,7 @@ def home():
         "index.html",
         cars=CAR_TYPES,
         colors=COLORS,
-        wraps=WRAP_TYPES,
+        brand=BRAND,
         washes=WASH,
         extras=EXTRAS,
         blocked=BLOCKED_DATES
@@ -141,7 +141,7 @@ def book():
 
     car = request.form["car"]
     color = request.form["color"]
-    wrap = request.form["wrap"]
+    brand = request.form["brand"]
     wash = request.form["wash"]
     extras = request.form.getlist("extras")
 
@@ -160,14 +160,14 @@ def book():
     INSERT INTO orders(
         booking_id, name, phone, plate,
         appointment_date, car_type, color,
-        wrap_type, wash_type, extras,
+        brand, wash_type, extras,
         total, created_at
     )
     VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
     """, (
         booking_id, name, phone, plate,
         date, car, color,
-        wrap, wash, ",".join(extras),
+        brand, wash, ",".join(extras),
         total, datetime.now().isoformat()
     ))
     conn.commit()
@@ -175,7 +175,7 @@ def book():
     # ---------------- PDF ----------------
     pdf_url = generate_pdf(
         booking_id, name, phone, plate, date,
-        car, color, wrap, wash, extras, total
+        car, color, brand, wash, extras, total
     )
 
     # ---------------- TELEGRAM (TEXT ONLY) ----------------
@@ -190,7 +190,7 @@ Plate: {plate}
 Date: {date}
 Car: {car}
 Color: {color}
-Wrap: {wrap}
+Brand: {brand}
 Wash: {wash}
 Extras: {extras}
 

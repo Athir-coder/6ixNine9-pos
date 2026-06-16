@@ -26,10 +26,10 @@ def telegram(msg):
 
 
 # ---------------- CONFIG ----------------
-CAR_TYPES = {"Sedan": 2000, "MPV": 2300}
+CAR_TYPES = {"Sedan": 2000, "MPV": 2300, "No": 0}
 BRAND = {"KTN": 500, "NAKA FILM PET": 1000, "No": 0}
+COLORS = {"Black": 0, "White": 0, "Red": 100, "Blue": 100, "No": 0}
 WASH = {"Basic Wash": 10, "Premium Wash": 20, "Full Detail": 40}
-COLORS = {"Black": 0, "White": 0, "Red": 100, "Blue": 100}
 
 BLOCKED_DATES = {"2026-01-01", "2026-02-10"}
 MAX_BOOKINGS_PER_DAY = 5
@@ -102,8 +102,8 @@ def generate_pdf(booking_id, name, phone, plate, date, car, color, brand, wash, 
         Spacer(1, 12),
 
         Paragraph(f"<b>Car:</b> {car}", styles["Normal"]),
-        Paragraph(f"<b>Color:</b> {color}", styles["Normal"]),
         Paragraph(f"<b>Brand:</b> {brand}", styles["Normal"]),
+        Paragraph(f"<b>Color:</b> {color}", styles["Normal"]),
         Paragraph(f"<b>Wash:</b> {wash}", styles["Normal"]),
 
         Spacer(1, 12),
@@ -183,8 +183,8 @@ Plate: {plate}
 
 Date: {date}
 Car: {car}
-Color: {color}
 Brand: {brand}
+Color: {color}
 Wash: {wash}
 
 TOTAL: RM {total}

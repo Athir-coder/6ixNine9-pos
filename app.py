@@ -84,7 +84,7 @@ def generate_booking_id():
 
 
 # ---------------- PDF ----------------
-def generate_pdf(booking_id, name, phone, plate, date, car, color, wrap, wash, extras, total):
+def generate_pdf(booking_id, name, phone, plate, date, car, color, brand, wash, extras, total):
     folder = os.path.join(BASE_DIR, "static", "invoices_private")
     os.makedirs(folder, exist_ok=True)
 

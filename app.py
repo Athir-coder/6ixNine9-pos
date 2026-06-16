@@ -53,7 +53,7 @@ plate TEXT,
 appointment_date TEXT,
 car_type TEXT,
 color TEXT,
-wrap_type TEXT,
+brand TEXT,
 wash_type TEXT,
 extras TEXT,
 total REAL,
@@ -73,7 +73,7 @@ def calculate_total(car, color, wrap, wash, extras):
     total = 0
     total += CAR_TYPES.get(car, 0)
     total += COLORS.get(color, 0)
-    total += WRAP_TYPES.get(wrap, 0)
+    total += BRAND.get(wrap, 0)
     total += WASH.get(wash, 0)
     total += sum(EXTRAS.get(e, 0) for e in extras)
     return total

@@ -117,14 +117,14 @@
                     {% endfor %}
                 </select>
 
-                <label>Brand</brand>
+                <label>Brand</label>
                 <select name="brand">
                     {% for k,v in brand.items() %}
                     <option value="{{k}}">{{k}}</option>
                     {% endfor %}
                 </select>
 
-                <label>Color</color>
+                <label>Color</label>
                 <select name="color">
                     {% for k,v in colors.items() %}
                     <option value="{{k}}">{{k}}</option>
@@ -137,18 +137,6 @@
                     <option value="{{k}}">{{k}}</option>
                     {% endfor %}
                 </select>
-            </div>
-
-            <!-- EXTRAS -->
-            <div class="box extras">
-                <h3>Extras</h3>
-
-                {% for k,v in extras.items() %}
-                <label>
-                    <input type="checkbox" name="extras" value="{{k}}">
-                    {{k}} (RM{{v}})
-                </label>
-                {% endfor %}
             </div>
 
             <button type="submit">💰 Confirm Booking</button>

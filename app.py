@@ -615,31 +615,140 @@ TOTAL: RM {total}
 
 
 
-    return f"""
+return f"""
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Booking Success</title>
 
 
-<h2>✔ Booking Successful</h2>
+<style>
+
+body {{
+    margin:0;
+    font-family:Arial;
+    background:#0f0f0f;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}}
 
 
-<p>ID: {booking_id}</p>
+.box {{
+
+    background:#1b1b1b;
+
+    padding:40px;
+
+    border-radius:12px;
+
+    text-align:center;
+
+    width:350px;
+
+}}
 
 
-<a href="{pdf_url}" download>
+h2 {{
+
+    color:#4CAF50;
+
+}}
+
+
+
+.button {{
+
+    display:block;
+
+    margin-top:20px;
+
+    padding:14px;
+
+    background:#1f6aa5;
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:6px;
+
+    font-weight:bold;
+
+}}
+
+
+
+.button:hover {{
+
+    background:#1590ff;
+
+}}
+
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="box">
+
+
+<h2>
+✔ Booking Successful
+</h2>
+
+
+
+<p>
+Booking ID:
+</p>
+
+
+<h3>
+{booking_id}
+</h3>
+
+
+
+
+
+<a class="button" href="{pdf_url}" download>
 
 📄 Download Invoice PDF
 
 </a>
 
 
-<br><br>
 
 
-<a href="/">
 
-Back Home
+<a class="button" href="/">
+
+🔙 Back Home
 
 </a>
 
+
+
+
+
+</div>
+
+
+</body>
+
+
+</html>
 
 """
 

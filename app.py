@@ -68,6 +68,8 @@ BRAND = {
 
 WASH = {
 
+    "No":0,
+    
     "Interior Pro A - Small":240,
 
     "Interior Pro B - Large":550,
@@ -190,29 +192,16 @@ def count_bookings(date):
 
 
 
-def calculate_total(car,color,brand,wash):
-
+def calculate_total(car, color, brand, wash):
 
     total = 0
 
-
-    total += CAR_TYPES.get(car,0)
-
-
-    total += COLORS.get(color,0)
-
-
-    total += BRAND.get(brand,0)
-
-
-    total += WASH.get(wash,{}).get(
-        "price",
-        0
-    )
-
+    total += CAR_TYPES.get(car, 0)
+    total += COLORS.get(color, 0)
+    total += BRAND.get(brand, 0)
+    total += WASH.get(wash, 0)
 
     return total
-
 
 
 
@@ -364,12 +353,6 @@ def generate_pdf(
 
         Paragraph(
         f"Package: {wash}",
-        styles["Normal"]
-        ),
-
-
-        Paragraph(
-        f"Package Details: {WASH[wash]['desc']}",
         styles["Normal"]
         ),
 

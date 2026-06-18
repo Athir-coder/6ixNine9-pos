@@ -1,686 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-
-<title>6ixNine9 Motorsport Booking</title>
-
-
-<style>
-
-
-body {
-
-    margin:0;
-    font-family:Arial;
-    background:#0f0f0f;
-    color:white;
-
-}
-
-
-
-.header {
-
-    text-align:center;
-    padding:15px;
-    background:#1c1c1c;
-
-    font-size:22px;
-    font-weight:bold;
-
-}
-
-
-
-.container {
-
-    display:flex;
-    min-height:90vh;
-
-}
-
-
-
-.left,.right {
-
-    flex:1;
-    padding:20px;
-
-}
-
-
-
-.box {
-
-    background:#1b1b1b;
-
-    padding:15px;
-
-    border-radius:10px;
-
-    margin-bottom:15px;
-
-}
-
-
-
-input,select {
-
-
-    width:100%;
-
-    padding:10px;
-
-    margin-top:5px;
-
-    margin-bottom:10px;
-
-
-    border:none;
-
-    border-radius:5px;
-
-
-    background:#2b2b2b;
-
-    color:white;
-
-
-}
-
-
-
-button {
-
-
-    width:100%;
-
-    padding:12px;
-
-
-    background:#1f6aa5;
-
-
-    border:none;
-
-    border-radius:5px;
-
-
-    color:white;
-
-    font-weight:bold;
-
-
-    cursor:pointer;
-
-
-}
-
-
-
-button:hover {
-
-    background:#1590ff;
-
-}
-
-
-
-
-.status {
-
-
-    white-space:pre-line;
-
-    color:#ccc;
-
-    font-size:13px;
-
-
-}
-
-
-
-
-
-/* COLOR PREVIEW */
-
-
-#colorPreview {
-
-
-    width:100%;
-
-
-    height:120px;
-
-
-    border-radius:10px;
-
-
-    background:white;
-
-
-    border:2px solid #444;
-
-
-}
-
-
-
-
-</style>
-
-
-</head>
-
-
-
-
-
-
-<body>
-
-
-
-
-
-<div class="header">
-
-🦈 6ixNine9 Motorsport Booking System
-
-</div>
-
-
-
-
-
-
-
-<div class="container">
-
-
-
-
-
-<div class="left">
-
-
-
-
-
-<form action="/book" method="POST">
-
-
-
-
-
-
-
-<div class="box">
-
-
-<h3>
-Customer Info
-</h3>
-
-
-
-<input
-
-name="name"
-
-placeholder="Customer Name"
-
-required>
-
-
-
-<input
-
-name="phone"
-
-placeholder="Phone Number"
-
-required>
-
-
-
-
-<input
-
-name="plate"
-
-placeholder="Car Plate"
-
-required>
-
-
-
-
-
-
-<label>
-
-Appointment Date
-
-</label>
-
-
-<input
-
-type="date"
-
-name="date"
-
-required>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="box">
-
-
-<h3>
-Vehicle Option
-</h3>
-
-
-
-
-
-<label>
-
-Car Type
-
-</label>
-
-
-
-
-<select name="car">
-
-
-
-{% for k,v in cars.items() %}
-
-
-
-<option value="{{k}}">
-
-{{k}}
-
-</option>
-
-
-
-{% endfor %}
-
-
-
-</select>
-
-
-
-
-
-
-
-
-
-<label>
-
-Brand
-
-</label>
-
-
-
-<select name="brand">
-
-
-
-{% for k,v in brand.items() %}
-
-
-
-<option value="{{k}}">
-
-{{k}}
-
-</option>
-
-
-
-{% endfor %}
-
-
-
-</select>
-
-
-
-
-
-
-
-
-
-<label>
-
-Colour
-
-</label>
-
-
-
-
-<select
-
-name="color"
-
-id="colorSelect">
-
-
-
-{% for k,v in colors.items() %}
-
-
-
-<option value="{{k}}">
-
-{{k}}
-
-</option>
-
-
-
-{% endfor %}
-
-
-
-</select>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="box">
-
-
-<h3>
-
-Color Preview
-
-</h3>
-
-
-
-<div id="colorPreview"></div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="box">
-
-
-<h3>
-
-Detailing Service
-
-</h3>
-
-
-
-
-
-<label>
-
-Package
-
-</label>
-
-
-
-
-<select name="wash">
-
-
-
-{% for k,v in washes.items() %}
-
-
-
-<option value="{{k}}">
-
-{{k}}
-
-</option>
-
-
-
-{% endfor %}
-
-
-
-</select>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<button type="submit">
-
-💰 Confirm Booking
-
-</button>
-
-
-
-
-
-
-
-</form>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="right">
-
-
-
-
-
-<div class="box">
-
-
-<h3>
-
-System Status
-
-</h3>
-
-
-
-<div class="status">
-
-
-✔ Booking System Active
-
-
-✔ Telegram Alerts ON
-
-
-✔ PDF Receipt System Active
-
-
-✔ SQLite Connected
-
-
-✔ Render Ready
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="box">
-
-
-<h3>
-
-After Booking
-
-</h3>
-
-
-
-<div class="status">
-
-
-✔ Booking saved
-
-
-✔ Telegram notification sent
-
-
-✔ PDF generated
-
-
-✔ Download receipt available
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="box">
-
-
-<h3>
-
-Notes
-
-</h3>
-
-
-
-<div class="status">
-
-
-- Check phone number
-
-
-- Check plate number
-
-
-- Submit once only
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
 <script>
-
 
 
 const colorSelect =
@@ -688,11 +6,20 @@ const colorSelect =
 document.getElementById("colorSelect");
 
 
-
 const colorPreview =
 
 document.getElementById("colorPreview");
 
+
+
+const washSelect =
+
+document.getElementById("washSelect");
+
+
+const packageInfo =
+
+document.getElementById("packageInfo");
 
 
 
@@ -707,17 +34,14 @@ const colorMap = {
 "#080808",
 
 
-
 "White":
 
 "#eeeeee",
 
 
-
 "Red":
 
 "#c00000",
-
 
 
 "Blue":
@@ -736,7 +60,6 @@ const colorMap = {
 function updateColor(){
 
 
-
 let selected =
 
 colorSelect.value;
@@ -747,6 +70,78 @@ colorPreview.style.background =
 
 colorMap[selected];
 
+
+}
+
+
+
+
+
+
+
+
+const packages = {
+
+
+"Basic Wash":
+
+`
+✔ Exterior foam wash
+<br>
+✔ Drying
+<br>
+✔ Tyre shine
+`,
+
+
+"Premium Wash":
+
+`
+✔ Exterior wash
+<br>
+✔ Interior vacuum
+<br>
+✔ Dashboard cleaning
+<br>
+✔ Tyre shine
+`,
+
+
+"Full Detail":
+
+`
+✔ Deep exterior cleaning
+<br>
+✔ Interior detailing
+<br>
+✔ Leather treatment
+<br>
+✔ Glass polishing
+<br>
+✔ Complete finishing
+`
+
+
+};
+
+
+
+
+
+
+
+function updatePackage(){
+
+
+let selected =
+
+washSelect.value;
+
+
+
+packageInfo.innerHTML =
+
+packages[selected];
 
 
 }
@@ -767,20 +162,22 @@ updateColor
 
 
 
+washSelect.addEventListener(
+
+"change",
+
+updatePackage
+
+);
+
+
+
+
 
 updateColor();
 
-
+updatePackage();
 
 
 
 </script>
-
-
-
-
-
-</body>
-
-
-</html>

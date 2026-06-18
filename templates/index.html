@@ -5,147 +5,232 @@
 
 <title>6ixNine9 Motorsport Booking</title>
 
+
 <style>
 
-body {
 
-    margin:0;
-    font-family:Arial;
-    background:#0f0f0f;
-    color:white;
+body{
 
-}
+margin:0;
+font-family:Arial;
 
+background:#0f0f0f;
 
-.header {
-
-    text-align:center;
-    padding:15px;
-    background:#1c1c1c;
-    font-size:22px;
-    font-weight:bold;
+color:white;
 
 }
 
 
 
-.container {
+.header{
 
-    display:flex;
-    min-height:90vh;
+text-align:center;
 
-}
+padding:15px;
 
+background:#1c1c1c;
 
+font-size:22px;
 
-.left,.right {
-
-    flex:1;
-    padding:20px;
+font-weight:bold;
 
 }
 
 
 
-.box {
+.container{
 
-    background:#1b1b1b;
-    padding:15px;
-    border-radius:10px;
-    margin-bottom:15px;
+display:flex;
 
-}
-
-
-
-input,select {
-
-    width:100%;
-    padding:10px;
-    margin-top:5px;
-    margin-bottom:10px;
-
-    border:none;
-    border-radius:5px;
-
-    background:#2b2b2b;
-    color:white;
+min-height:90vh;
 
 }
 
 
 
-button {
+.left,.right{
 
-    width:100%;
-    padding:12px;
+flex:1;
 
-    background:#1f6aa5;
-
-    border:none;
-    border-radius:5px;
-
-    color:white;
-    font-weight:bold;
-
-    cursor:pointer;
-
-}
-
-
-button:hover {
-
-    background:#1590ff;
+padding:20px;
 
 }
 
 
 
-.status {
+.box{
 
-    white-space:pre-line;
-    color:#ccc;
-    font-size:13px;
+background:#1b1b1b;
+
+padding:15px;
+
+border-radius:10px;
+
+margin-bottom:15px;
+
+}
+
+
+
+input,select{
+
+width:100%;
+
+padding:10px;
+
+margin-top:5px;
+
+margin-bottom:10px;
+
+border:none;
+
+border-radius:5px;
+
+background:#2b2b2b;
+
+color:white;
+
+}
+
+
+
+button{
+
+width:100%;
+
+padding:12px;
+
+background:#1f6aa5;
+
+border:none;
+
+border-radius:5px;
+
+color:white;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+
+
+button:hover{
+
+background:#1590ff;
 
 }
 
 
 
 
-/* CAR PREVIEW */
+.status{
+
+white-space:pre-line;
+
+color:#ccc;
+
+font-size:13px;
+
+}
 
 
-.car-preview-container {
 
-    width:100%;
-    max-width:500px;
-    margin:auto;
+/* =========================
+CAR BODY COLOR SYSTEM
+========================= */
+
+
+.car-preview-container{
+
+
+position:relative;
+
+width:100%;
+
 
 }
 
 
 
-#carPreview {
-
-    width:100%;
-
-    display:block;
+#carPreview{
 
 
-    filter:
-    drop-shadow(0 10px 12px rgba(0,0,0,0.6));
+width:100%;
+
+display:block;
+
 
 }
 
+
+
+
+#paintLayer{
+
+
+position:absolute;
+
+
+top:0;
+
+left:0;
+
+
+width:100%;
+
+height:100%;
+
+
+
+background:red;
+
+
+
+opacity:0.85;
+
+
+
+mix-blend-mode:color;
+
+
+
+mask-image:url("/static/cars/sedan_mask.png");
+
+-webkit-mask-image:url("/static/cars/sedan_mask.png");
+
+
+
+mask-size:contain;
+
+-webkit-mask-size:contain;
+
+
+mask-repeat:no-repeat;
+
+-webkit-mask-repeat:no-repeat;
+
+
+
+mask-position:center;
+
+-webkit-mask-position:center;
+
+
+}
 
 
 
 </style>
 
+
 </head>
 
 
+
 <body>
+
 
 
 <div class="header">
@@ -157,7 +242,10 @@ button:hover {
 
 
 
+
 <div class="container">
+
+
 
 
 
@@ -165,42 +253,66 @@ button:hover {
 
 
 
+
+
 <form action="/book" method="POST">
+
+
 
 
 
 <div class="box">
 
+
 <h3>Customer Info</h3>
 
 
 <input
+
 name="name"
+
 placeholder="Customer Name"
+
 required>
 
 
+
 <input
+
 name="phone"
+
 placeholder="Phone Number"
+
 required>
+
+
 
 
 <input
+
 name="plate"
+
 placeholder="Car Plate"
+
 required>
+
+
 
 
 
 <label>
+
 Appointment Date
+
 </label>
 
 
 <input
+
 type="date"
+
 name="date"
+
 required>
 
 
@@ -213,32 +325,44 @@ required>
 
 
 
+
+
 <div class="box">
 
 
-<h3>Car Options</h3>
+<h3>Car Selection</h3>
 
 
 
 
 <label>
+
 Car Type
+
 </label>
 
 
 
-<select 
+<select
+
 name="car"
+
 id="carSelect">
+
 
 
 {% for k,v in cars.items() %}
 
+
 <option value="{{k}}">
+
 {{k}}
+
 </option>
 
+
 {% endfor %}
+
 
 
 </select>
@@ -250,25 +374,33 @@ id="carSelect">
 
 
 <label>
+
 Brand
+
 </label>
 
 
 <select name="brand">
 
 
+
 {% for k,v in brand.items() %}
 
 
 <option value="{{k}}">
+
 {{k}}
+
 </option>
 
 
 {% endfor %}
 
 
+
 </select>
+
+
 
 
 
@@ -277,28 +409,37 @@ Brand
 
 
 <label>
-Color
+
+Colour
+
 </label>
 
 
+
 <select
+
 name="color"
+
 id="colorSelect">
+
 
 
 {% for k,v in colors.items() %}
 
 
+
 <option value="{{k}}">
+
 {{k}}
+
 </option>
 
 
 {% endfor %}
 
 
-</select>
 
+</select>
 
 
 
@@ -311,28 +452,39 @@ id="colorSelect">
 
 
 
+
 <div class="box">
 
 
 <h3>
+
 Vehicle Preview
+
 </h3>
+
 
 
 
 <div class="car-preview-container">
 
 
+
 <img
 
 id="carPreview"
 
-src="{{ url_for('static', filename='cars/sedan.png') }}"
+src="{{url_for('static',filename='cars/sedan.png')}}"
 
 >
 
 
+
+<div id="paintLayer"></div>
+
+
+
 </div>
+
 
 
 </div>
@@ -349,24 +501,24 @@ src="{{ url_for('static', filename='cars/sedan.png') }}"
 
 
 <h3>
+
 Wash Service
+
 </h3>
 
 
 
-<label>
-Wash Type
-</label>
-
-
 <select name="wash">
+
 
 
 {% for k,v in washes.items() %}
 
 
 <option value="{{k}}">
+
 {{k}}
+
 </option>
 
 
@@ -377,7 +529,9 @@ Wash Type
 </select>
 
 
+
 </div>
+
 
 
 
@@ -390,7 +544,6 @@ Wash Type
 💰 Confirm Booking
 
 </button>
-
 
 
 
@@ -408,6 +561,8 @@ Wash Type
 
 
 
+
+
 <div class="right">
 
 
@@ -416,26 +571,30 @@ Wash Type
 
 
 <h3>
+
 System Status
+
 </h3>
 
 
 <div class="status">
 
-✔ Booking System Active
 
-✔ Telegram Alerts ON
+✔ Booking Active
 
-✔ PDF Receipt Active
+✔ Telegram ON
 
-✔ SQLite Connected
+✔ Database Connected
 
 ✔ Render Ready
 
+
 </div>
 
 
+
 </div>
+
 
 
 
@@ -446,30 +605,34 @@ System Status
 
 
 <h3>
+
 After Booking
+
 </h3>
 
 
 <div class="status">
 
-✔ Booking Saved
 
-✔ Telegram Sent
+✔ Saved
 
-✔ PDF Generated
+✔ Notification Sent
 
-✔ Download Available
-
-</div>
+✔ Receipt Generated
 
 
 </div>
 
 
 
+</div>
+
+
 
 
 </div>
+
+
 
 
 
@@ -501,34 +664,32 @@ const carPreview =
 document.getElementById("carPreview");
 
 
+const paintLayer =
+document.getElementById("paintLayer");
 
 
 
-const colorMap = {
+
+
+
+
+const colors={
 
 
 "Black":
-
-"brightness(0.25)",
-
+"#080808",
 
 
 "White":
-
-"brightness(1.8)",
-
+"#ffffff",
 
 
 "Red":
-
-"sepia(1) saturate(8) hue-rotate(320deg)",
-
+"#c00000",
 
 
 "Blue":
-
-"sepia(1) saturate(6) hue-rotate(180deg)"
-
+"#0047ab"
 
 
 };
@@ -538,7 +699,9 @@ const colorMap = {
 
 
 
+
 function updatePreview(){
+
 
 
 let car =
@@ -553,12 +716,26 @@ colorSelect.value;
 
 
 
-if(car === "MPV"){
+if(car==="MPV"){
+
 
 
 carPreview.src =
 
-"{{ url_for('static', filename='cars/mpv.png') }}";
+"/static/cars/mpv.png";
+
+
+
+paintLayer.style.maskImage =
+
+"url('/static/cars/mpv_mask.png')";
+
+
+
+paintLayer.style.webkitMaskImage =
+
+"url('/static/cars/mpv_mask.png')";
+
 
 
 }
@@ -566,9 +743,23 @@ carPreview.src =
 else{
 
 
+
 carPreview.src =
 
-"{{ url_for('static', filename='cars/sedan.png') }}";
+"/static/cars/sedan.png";
+
+
+
+paintLayer.style.maskImage =
+
+"url('/static/cars/sedan_mask.png')";
+
+
+
+paintLayer.style.webkitMaskImage =
+
+"url('/static/cars/sedan_mask.png')";
+
 
 
 }
@@ -578,11 +769,9 @@ carPreview.src =
 
 
 
-carPreview.style.filter =
+paintLayer.style.background =
 
-"drop-shadow(0 10px 12px rgba(0,0,0,0.6)) "
-+
-colorMap[color];
+colors[color];
 
 
 
@@ -595,16 +784,23 @@ colorMap[color];
 
 
 carSelect.addEventListener(
+
 "change",
+
 updatePreview
+
 );
 
 
 
 colorSelect.addEventListener(
+
 "change",
+
 updatePreview
+
 );
+
 
 
 
@@ -614,6 +810,7 @@ updatePreview();
 
 
 </script>
+
 
 
 

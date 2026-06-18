@@ -60,6 +60,8 @@ BRAND = {
 
 WASH = {
 
+    "No":0,
+    
     "Interior Pro A - Small":240,
 
     "Interior Pro B - Large":550,
@@ -72,13 +74,15 @@ WASH = {
 
 COLORS = {
 
+    "No":0,
+
     "Black":0,
 
     "White":0,
 
-    "Red":100,
+    "Red":0,
 
-    "Blue":100
+    "Blue":0
 
 }
 

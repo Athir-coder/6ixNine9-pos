@@ -15,8 +15,8 @@ app = Flask(__name__)
 
 # ---------------- TELEGRAM ----------------
 
-BOT_TOKEN = "8716076962:AAHpIFuyq7Jq51Gy4Dj9PsPexClS-v04-Oo"
-CHAT_ID = "723175483"
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+CHAT_ID = os.environ.get("CHAT_ID")
 
 
 def telegram(msg):

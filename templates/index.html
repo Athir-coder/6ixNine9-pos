@@ -5,14 +5,12 @@
 
 <title>6ixNine9 Motorsport Booking</title>
 
-
 <style>
 
 body {
 
     margin:0;
     font-family:Arial;
-
     background:#0f0f0f;
     color:white;
 
@@ -22,13 +20,9 @@ body {
 .header {
 
     text-align:center;
-
     padding:15px;
-
     background:#1c1c1c;
-
     font-size:22px;
-
     font-weight:bold;
 
 }
@@ -38,18 +32,15 @@ body {
 .container {
 
     display:flex;
-
     min-height:90vh;
 
 }
 
 
 
-.left,
-.right {
+.left,.right {
 
     flex:1;
-
     padding:20px;
 
 }
@@ -59,39 +50,26 @@ body {
 .box {
 
     background:#1b1b1b;
-
     padding:15px;
-
     border-radius:10px;
-
     margin-bottom:15px;
 
 }
 
 
 
-input,
-select {
-
+input,select {
 
     width:100%;
-
     padding:10px;
-
     margin-top:5px;
-
     margin-bottom:10px;
 
-
     border:none;
-
     border-radius:5px;
 
-
     background:#2b2b2b;
-
     color:white;
-
 
 }
 
@@ -100,25 +78,19 @@ select {
 button {
 
     width:100%;
-
     padding:12px;
-
 
     background:#1f6aa5;
 
     border:none;
-
     border-radius:5px;
 
-
     color:white;
-
     font-weight:bold;
 
     cursor:pointer;
 
 }
-
 
 
 button:hover {
@@ -132,9 +104,7 @@ button:hover {
 .status {
 
     white-space:pre-line;
-
     color:#ccc;
-
     font-size:13px;
 
 }
@@ -142,17 +112,13 @@ button:hover {
 
 
 
-/* ================= CAR PREVIEW ================= */
+/* CAR PREVIEW */
 
 
 .car-preview-container {
 
-    position:relative;
-
     width:100%;
-
     max-width:500px;
-
     margin:auto;
 
 }
@@ -161,67 +127,25 @@ button:hover {
 
 #carPreview {
 
-
     width:100%;
 
     display:block;
 
 
-    filter:drop-shadow(0 10px 12px rgba(0,0,0,0.6));
-
-
-    position:relative;
-
-    z-index:1;
+    filter:
+    drop-shadow(0 10px 12px rgba(0,0,0,0.6));
 
 }
 
-
-
-
-#colorLayer {
-
-
-    position:absolute;
-
-
-    top:0;
-
-    left:0;
-
-
-    width:100%;
-
-    height:100%;
-
-
-
-    mix-blend-mode:color;
-
-
-    opacity:0.85;
-
-
-
-    z-index:2;
-
-
-    pointer-events:none;
-
-
-}
 
 
 
 </style>
 
-
 </head>
 
 
-
 <body>
-
 
 
 <div class="header">
@@ -233,18 +157,11 @@ button:hover {
 
 
 
-
 <div class="container">
 
 
 
-
-
-<!-- LEFT PANEL -->
-
 <div class="left">
-
-
 
 
 
@@ -252,23 +169,18 @@ button:hover {
 
 
 
-
-
-<!-- CUSTOMER -->
-
 <div class="box">
-
 
 <h3>Customer Info</h3>
 
 
-<input 
+<input
 name="name"
 placeholder="Customer Name"
 required>
 
 
-<input 
+<input
 name="phone"
 placeholder="Phone Number"
 required>
@@ -278,7 +190,6 @@ required>
 name="plate"
 placeholder="Car Plate"
 required>
-
 
 
 
@@ -293,6 +204,7 @@ name="date"
 required>
 
 
+
 </div>
 
 
@@ -301,12 +213,11 @@ required>
 
 
 
-<!-- CAR -->
-
 <div class="box">
 
 
 <h3>Car Options</h3>
+
 
 
 
@@ -316,7 +227,9 @@ Car Type
 
 
 
-<select name="car" id="carSelect">
+<select 
+name="car"
+id="carSelect">
 
 
 {% for k,v in cars.items() %}
@@ -324,7 +237,6 @@ Car Type
 <option value="{{k}}">
 {{k}}
 </option>
-
 
 {% endfor %}
 
@@ -335,10 +247,11 @@ Car Type
 
 
 
+
+
 <label>
 Brand
 </label>
-
 
 
 <select name="brand">
@@ -368,14 +281,12 @@ Color
 </label>
 
 
-
-
-<select name="color" id="colorSelect">
-
+<select
+name="color"
+id="colorSelect">
 
 
 {% for k,v in colors.items() %}
-
 
 
 <option value="{{k}}">
@@ -383,12 +294,11 @@ Color
 </option>
 
 
-
 {% endfor %}
 
 
-
 </select>
+
 
 
 
@@ -400,9 +310,6 @@ Color
 
 
 
-
-
-<!-- PREVIEW -->
 
 <div class="box">
 
@@ -425,12 +332,7 @@ src="{{ url_for('static', filename='cars/sedan.png') }}"
 >
 
 
-<div id="colorLayer"></div>
-
-
-
 </div>
-
 
 
 </div>
@@ -441,9 +343,6 @@ src="{{ url_for('static', filename='cars/sedan.png') }}"
 
 
 
-
-
-<!-- WASH -->
 
 
 <div class="box">
@@ -460,21 +359,15 @@ Wash Type
 </label>
 
 
-
 <select name="wash">
-
 
 
 {% for k,v in washes.items() %}
 
 
-
 <option value="{{k}}">
-
 {{k}}
-
 </option>
-
 
 
 {% endfor %}
@@ -482,7 +375,6 @@ Wash Type
 
 
 </select>
-
 
 
 </div>
@@ -516,12 +408,7 @@ Wash Type
 
 
 
-<!-- RIGHT PANEL -->
-
-
 <div class="right">
-
-
 
 
 
@@ -533,7 +420,6 @@ System Status
 </h3>
 
 
-
 <div class="status">
 
 ✔ Booking System Active
@@ -542,7 +428,7 @@ System Status
 
 ✔ PDF Receipt Active
 
-✔ SQLite Database Connected
+✔ SQLite Connected
 
 ✔ Render Ready
 
@@ -550,8 +436,6 @@ System Status
 
 
 </div>
-
-
 
 
 
@@ -566,48 +450,15 @@ After Booking
 </h3>
 
 
-
 <div class="status">
 
-✔ Booking saved
+✔ Booking Saved
 
-✔ Telegram sent
+✔ Telegram Sent
 
-✔ PDF generated
+✔ PDF Generated
 
-✔ Download available
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="box">
-
-
-<h3>
-Notes
-</h3>
-
-
-<div class="status">
-
-
-- Check phone number
-
-- Check plate number
-
-- Submit once only
-
+✔ Download Available
 
 </div>
 
@@ -619,6 +470,7 @@ Notes
 
 
 </div>
+
 
 
 
@@ -637,7 +489,6 @@ Notes
 <script>
 
 
-
 const carSelect =
 document.getElementById("carSelect");
 
@@ -650,12 +501,6 @@ const carPreview =
 document.getElementById("carPreview");
 
 
-const colorLayer =
-document.getElementById("colorLayer");
-
-
-
-
 
 
 
@@ -663,19 +508,27 @@ const colorMap = {
 
 
 "Black":
-"#080808",
+
+"brightness(0.25)",
+
 
 
 "White":
-"#eeeeee",
+
+"brightness(1.8)",
+
 
 
 "Red":
-"#b30000",
+
+"sepia(1) saturate(8) hue-rotate(320deg)",
+
 
 
 "Blue":
-"#0047ab"
+
+"sepia(1) saturate(6) hue-rotate(180deg)"
+
 
 
 };
@@ -685,10 +538,7 @@ const colorMap = {
 
 
 
-
-
 function updatePreview(){
-
 
 
 let car =
@@ -707,6 +557,7 @@ if(car === "MPV"){
 
 
 carPreview.src =
+
 "{{ url_for('static', filename='cars/mpv.png') }}";
 
 
@@ -716,6 +567,7 @@ else{
 
 
 carPreview.src =
+
 "{{ url_for('static', filename='cars/sedan.png') }}";
 
 
@@ -726,7 +578,10 @@ carPreview.src =
 
 
 
-colorLayer.style.backgroundColor =
+carPreview.style.filter =
+
+"drop-shadow(0 10px 12px rgba(0,0,0,0.6)) "
++
 colorMap[color];
 
 
@@ -754,9 +609,7 @@ updatePreview
 
 
 
-
 updatePreview();
-
 
 
 
@@ -764,9 +617,6 @@ updatePreview();
 
 
 
-
-
 </body>
-
 
 </html>

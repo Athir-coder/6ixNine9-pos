@@ -5,111 +5,46 @@
 
 <title>6ixNine9 Motorsport Booking</title>
 
-
 <style>
 
-<script>
-
-const datePicker = document.getElementById("datePicker");
-
-
-// shop closed dates
-const closedDates = [
-    "2026-06-25",
-    "2026-07-01",
-    "2026-08-31"
-];
-
-
-// block past dates
-const today = new Date();
-
-const yyyy = today.getFullYear();
-
-const mm = String(today.getMonth()+1).padStart(2,"0");
-
-const dd = String(today.getDate()).padStart(2,"0");
-
-
-datePicker.min = `${yyyy}-${mm}-${dd}`;
-
-
-
-// prevent choosing closed dates
-
-datePicker.addEventListener("change", function(){
-
-
-    if(closedDates.includes(this.value)){
-
-
-        alert("❌ Sorry, shop is closed on this date");
-
-
-        this.value = "";
-
-
-    }
-
-
-});
-
-
-</script>
 body {
-
     margin:0;
     font-family:Arial;
     background:#0f0f0f;
     color:white;
-
 }
 
 
-
 .header {
-
     text-align:center;
     padding:15px;
     background:#1c1c1c;
     font-size:22px;
     font-weight:bold;
-
 }
-
 
 
 .container {
-
     display:flex;
     min-height:90vh;
-
 }
-
 
 
 .left,.right {
-
     flex:1;
     padding:20px;
-
 }
 
 
-
 .box {
-
     background:#1b1b1b;
     padding:15px;
     border-radius:10px;
     margin-bottom:15px;
-
 }
 
 
-
 input,select {
-
 
     width:100%;
     padding:10px;
@@ -121,25 +56,18 @@ input,select {
     border-radius:5px;
 
     background:#2b2b2b;
-
     color:white;
-
-
 }
-
 
 
 button {
 
-
     width:100%;
-
     padding:12px;
 
     background:#1f6aa5;
 
     border:none;
-
     border-radius:5px;
 
     color:white;
@@ -148,20 +76,14 @@ button {
 
     cursor:pointer;
 
-
 }
-
 
 
 button:hover {
 
-
     background:#1590ff;
 
-
 }
-
-
 
 
 .status {
@@ -175,10 +97,7 @@ button:hover {
 }
 
 
-
-
 #colorPreview {
-
 
     width:100%;
 
@@ -191,11 +110,7 @@ button:hover {
 }
 
 
-
-
-
 #packageInfo {
-
 
     background:#111;
 
@@ -208,17 +123,12 @@ button:hover {
 }
 
 
-
-
 </style>
-
 
 </head>
 
 
 <body>
-
-
 
 
 <div class="header">
@@ -230,73 +140,36 @@ button:hover {
 
 
 
-
-
-
 <div class="container">
-
-
-
-
-
-<!-- LEFT -->
 
 
 <div class="left">
 
 
-
-
-
 <form action="/book" method="POST">
-
-
-
 
 
 <div class="box">
 
-
-<h3>
-
-Customer Info
-
-</h3>
-
-
+<h3>Customer Info</h3>
 
 
 <input
-
 name="name"
-
 placeholder="Customer Name"
-
 required>
 
 
-
-
 <input
-
 name="phone"
-
 placeholder="Phone Number"
-
 required>
-
-
 
 
 <input
-
 name="plate"
-
 placeholder="Car Plate"
-
 required>
-
-
 
 
 
@@ -307,13 +180,15 @@ Appointment Date
 </label>
 
 
-
 <input
-type="date"
-id="datePicker"
-name="date"
-required>
 
+type="date"
+
+id="datePicker"
+
+name="date"
+
+required>
 
 
 
@@ -324,29 +199,13 @@ required>
 
 
 
-
-
-
-
 <div class="box">
 
 
-<h3>
-
-Vehicle Option
-
-</h3>
+<h3>Vehicle Option</h3>
 
 
-
-
-
-<label>
-
-Car Type
-
-</label>
-
+<label>Car Type</label>
 
 
 <select name="car">
@@ -354,13 +213,11 @@ Car Type
 
 {% for k,v in cars.items() %}
 
-
 <option value="{{k}}">
 
 {{k}}
 
 </option>
-
 
 {% endfor %}
 
@@ -371,17 +228,7 @@ Car Type
 
 
 
-
-
-
-
-<label>
-
-Brand
-
-</label>
-
-
+<label>Brand</label>
 
 
 <select name="brand">
@@ -406,17 +253,7 @@ Brand
 
 
 
-
-
-
-
-<label>
-
-Colour
-
-</label>
-
-
+<label>Colour</label>
 
 
 <select
@@ -442,13 +279,7 @@ id="colorSelect">
 </select>
 
 
-
-
-
 </div>
-
-
-
 
 
 
@@ -458,22 +289,13 @@ id="colorSelect">
 
 <div class="box">
 
-
-<h3>
-
-Colour Preview
-
-</h3>
-
+<h3>Colour Preview</h3>
 
 
 <div id="colorPreview"></div>
 
 
-
 </div>
-
-
 
 
 
@@ -484,22 +306,7 @@ Colour Preview
 <div class="box">
 
 
-<h3>
-
-Interior Package
-
-</h3>
-
-
-
-<label>
-
-Select Package
-
-</label>
-
-
-
+<h3>Interior Package</h3>
 
 
 <select
@@ -509,29 +316,20 @@ name="wash"
 id="washSelect">
 
 
-
 {% for k,v in washes.items() %}
-
 
 
 <option value="{{k}}">
 
-
 {{k}} - RM{{v}}
 
-
 </option>
-
 
 
 {% endfor %}
 
 
-
-
 </select>
-
-
 
 
 
@@ -544,18 +342,11 @@ Package Includes:
 </h4>
 
 
-
-<div id="packageInfo">
-
-</div>
-
-
+<div id="packageInfo"></div>
 
 
 
 </div>
-
-
 
 
 
@@ -570,14 +361,7 @@ Package Includes:
 </button>
 
 
-
-
-
-
 </form>
-
-
-
 
 
 </div>
@@ -590,28 +374,15 @@ Package Includes:
 
 
 
-<!-- RIGHT -->
-
-
 <div class="right">
-
-
-
 
 
 <div class="box">
 
-
-<h3>
-
-System Status
-
-</h3>
-
+<h3>System Status</h3>
 
 
 <div class="status">
-
 
 ✔ Booking System Active
 
@@ -619,16 +390,14 @@ System Status
 
 ✔ PDF Invoice Active
 
-✔ SQLite Database Connected
+✔ SQLite Connected
 
 ✔ Render Ready
 
-
 </div>
 
 
 </div>
-
 
 
 
@@ -638,17 +407,10 @@ System Status
 
 <div class="box">
 
-
-<h3>
-
-After Booking
-
-</h3>
-
+<h3>After Booking</h3>
 
 
 <div class="status">
-
 
 ✔ Booking saved
 
@@ -658,7 +420,6 @@ After Booking
 
 ✔ Download button shown
 
-
 </div>
 
 
@@ -669,51 +430,11 @@ After Booking
 
 
 
-
-
-
-<div class="box">
-
-
-<h3>
-
-Notes
-
-</h3>
-
-
-
-<div class="status">
-
-
-- Check customer details
-
-- Select correct package
-
-- Submit once only
-
-
-</div>
-
-
 </div>
 
 
 
-
-
-
-
 </div>
-
-
-
-
-
-
-
-</div>
-
 
 
 
@@ -725,33 +446,15 @@ Notes
 <script>
 
 
+// ================= COLOR PREVIEW =================
+
 
 const colorSelect =
-
 document.getElementById("colorSelect");
 
 
-
 const colorPreview =
-
 document.getElementById("colorPreview");
-
-
-
-
-const washSelect =
-
-document.getElementById("washSelect");
-
-
-
-const packageInfo =
-
-document.getElementById("packageInfo");
-
-
-
-
 
 
 
@@ -771,27 +474,41 @@ const colorMap = {
 
 
 
-
-
-
-
-
 function updateColor(){
 
 
-let c = colorSelect.value;
-
-
-colorPreview.style.background = colorMap[c];
+colorPreview.style.background =
+colorMap[colorSelect.value];
 
 
 }
 
 
+colorSelect.addEventListener(
+"change",
+updateColor
+);
+
+
+
+updateColor();
 
 
 
 
+
+
+
+// ================= PACKAGE INFO =================
+
+
+
+const washSelect =
+document.getElementById("washSelect");
+
+
+const packageInfo =
+document.getElementById("packageInfo");
 
 
 
@@ -805,129 +522,66 @@ No detailing selected
 `,
 
 
-
-
 "Interior Pro A - Small":
 
 `
-✔ Seat Deep Cleaning & Water Extraction
+✔ Seat Deep Cleaning
 <br>
 ✔ Interior Vacuum
 `,
-
-
 
 
 
 "Interior Pro B - Large":
 
 `
-✔ Seat Cleaning & Water Extraction
+✔ Seat Cleaning
 <br>
 ✔ Interior Vacuum
 <br>
-✔ Interior Plastic & Leather Recondition
+✔ Leather Recondition
 <br>
-✔ Carpet Cleaning & Recondition
+✔ Carpet Cleaning
 <br>
-✔ Carpet Cleaning & Water Extraction
-<br>
-✔ Floor Carpet Cleaning & Water Extraction
-<br>
-✔ Seat Deep Cleaning & Water Extraction
-<br>
-✔ Dashboard Detail & Recondition / Wax
-<br>
-✔ Gas Pedal Detail
+✔ Dashboard Detail
 `,
-
-
 
 
 
 "Interior Pro C - Large plus":
 
 `
-✔ Seat Cleaning & Water Extraction
+✔ Full Interior Restoration
 <br>
-✔ Interior Vacuum
+✔ Engine Bay Detail
 <br>
-✔ Interior Plastic & Leather Recondition
-<br>
-✔ Carpet Cleaning & Recondition
-<br>
-✔ Carpet Cleaning & Water Extraction
-<br>
-✔ Floor Carpet Cleaning & Water Extraction
-<br>
-✔ Seat Deep Cleaning & Water Extraction
-<br>
-✔ Dashboard Detail & Recondition / Wax
-<br>
-✔ Gas Pedal Detail
-<br>
-✔ Engine Bay Detail & Hyper Dressing
-<br>
-✔ Roof Cleaning & Water  Extraction
+✔ Roof Cleaning
 <br>
 ✔ Steam Wash
 <br>
-✔ Meguir’s Odor Refreshner
+✔ Odor Refresh
 `
 
 };
 
 
 
-
-
-
-
-
 function updatePackage(){
 
 
-let p = washSelect.value;
-
-
-packageInfo.innerHTML = packages[p] || "";
-
+packageInfo.innerHTML =
+packages[washSelect.value] || "";
 
 
 }
 
 
 
-
-
-
-
-
-colorSelect.addEventListener(
-
-"change",
-
-updateColor
-
-);
-
-
-
-
 washSelect.addEventListener(
-
 "change",
-
 updatePackage
-
 );
 
-
-
-
-
-
-updateColor();
 
 updatePackage();
 
@@ -935,13 +589,90 @@ updatePackage();
 
 
 
+
+
+// ================= DATE LOCK =================
+
+
+
+const datePicker =
+document.getElementById("datePicker");
+
+
+
+// disable past date
+
+
+const today = new Date();
+
+
+const yyyy =
+today.getFullYear();
+
+
+const mm =
+String(today.getMonth()+1)
+.padStart(2,"0");
+
+
+const dd =
+String(today.getDate())
+.padStart(2,"0");
+
+
+datePicker.min =
+`${yyyy}-${mm}-${dd}`;
+
+
+
+
+
+// shop closed dates
+
+
+const closedDates = [
+
+
+"2026-06-25",
+
+"2026-07-01",
+
+"2026-08-31"
+
+
+];
+
+
+
+
+
+datePicker.addEventListener(
+"change",
+function(){
+
+
+if(closedDates.includes(this.value)){
+
+
+alert(
+"❌ Sorry, shop is closed on this date"
+);
+
+
+this.value="";
+
+
+}
+
+
+});
+
+
+
 </script>
 
 
 
-
-
 </body>
-
 
 </html>

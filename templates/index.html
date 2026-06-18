@@ -86,6 +86,35 @@
     margin-top: 10px;
     border: 1px solid #444;
 }
+
+        .car-preview-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+}
+
+#carPreview {
+    width: 100%;
+    position: relative;
+    z-index: 2;
+}
+
+#colorLayer {
+    position: absolute;
+    inset: 0;
+
+    mix-blend-mode: multiply;
+
+    opacity: 0.75;
+
+    border-radius: 10px;
+
+    z-index: 1;
+
+    background: black;
+}
+        
     </style>
 </head>
 
@@ -111,6 +140,41 @@ colorSelect.addEventListener("change", updateColorPreview);
 
 updateColorPreview();
 </script>
+
+<script>
+const carSelect = document.getElementById("carSelect");
+const colorSelect = document.getElementById("colorSelect");
+
+const preview = document.getElementById("carPreview");
+const colorLayer = document.getElementById("colorLayer");
+
+const colorMap = {
+    "Black": "#111111",
+    "White": "#ffffff",
+    "Red": "#cc0000",
+    "Blue": "#005eff"
+};
+
+function updatePreview() {
+
+    // Car image
+    if (carSelect.value === "MPV") {
+        preview.src = "/static/cars/mpv.png";
+    } else {
+        preview.src = "/static/cars/sedan.png";
+    }
+
+    // Color overlay
+    colorLayer.style.background =
+        colorMap[colorSelect.value] || "#444";
+}
+
+carSelect.addEventListener("change", updatePreview);
+colorSelect.addEventListener("change", updatePreview);
+
+updatePreview();
+</script>
+    
 <body>
 
 <div class="header">🦈 6ixNine9 Motorsport Booking System</div>
@@ -161,7 +225,19 @@ updateColorPreview();
                     {% endfor %}
                 </select>
 
-            <div id="colorPreview"></div>
+                <div class="box">
+    <h3>Vehicle Preview</h3>
+
+    <div class="car-preview-container">
+        <div id="colorLayer"></div>
+
+        <img
+            id="carPreview"
+            src="/static/cars/sedan.png"
+            alt="Car Preview"
+        >
+    </div>
+</div>       
 
 <div class="box">
     <h3>Wash Service</h3>

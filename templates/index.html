@@ -18,7 +18,628 @@ background:#0f0f0f;
 
 color:white;
 
+}<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>6ixNine9 Motorsport Booking</title>
+
+<style>
+
+body {
+
+    margin:0;
+    font-family:Arial;
+    background:#0f0f0f;
+    color:white;
+
 }
+
+
+.header {
+
+    text-align:center;
+    padding:15px;
+    background:#1c1c1c;
+    font-size:22px;
+    font-weight:bold;
+
+}
+
+
+
+.container {
+
+    display:flex;
+    min-height:90vh;
+
+}
+
+
+
+.left,.right {
+
+    flex:1;
+    padding:20px;
+
+}
+
+
+
+.box {
+
+    background:#1b1b1b;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:15px;
+
+}
+
+
+
+input,select {
+
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    margin-bottom:10px;
+
+    border:none;
+    border-radius:5px;
+
+    background:#2b2b2b;
+    color:white;
+
+}
+
+
+
+button {
+
+    width:100%;
+    padding:12px;
+
+    background:#1f6aa5;
+
+    border:none;
+    border-radius:5px;
+
+    color:white;
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+
+button:hover {
+
+    background:#1590ff;
+
+}
+
+
+
+.status {
+
+    white-space:pre-line;
+    color:#ccc;
+    font-size:13px;
+
+}
+
+
+
+
+/* CAR PREVIEW */
+
+
+.car-preview-container {
+
+    width:100%;
+    max-width:500px;
+    margin:auto;
+
+}
+
+
+
+#carPreview {
+
+    width:100%;
+
+    display:block;
+
+
+    filter:
+    drop-shadow(0 10px 12px rgba(0,0,0,0.6));
+
+}
+
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+🦈 6ixNine9 Motorsport Booking System
+
+</div>
+
+
+
+
+<div class="container">
+
+
+
+<div class="left">
+
+
+
+<form action="/book" method="POST">
+
+
+
+<div class="box">
+
+<h3>Customer Info</h3>
+
+
+<input
+name="name"
+placeholder="Customer Name"
+required>
+
+
+<input
+name="phone"
+placeholder="Phone Number"
+required>
+
+
+<input
+name="plate"
+placeholder="Car Plate"
+required>
+
+
+
+<label>
+Appointment Date
+</label>
+
+
+<input
+type="date"
+name="date"
+required>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h3>Car Options</h3>
+
+
+
+
+<label>
+Car Type
+</label>
+
+
+
+<select 
+name="car"
+id="carSelect">
+
+
+{% for k,v in cars.items() %}
+
+<option value="{{k}}">
+{{k}}
+</option>
+
+{% endfor %}
+
+
+</select>
+
+
+
+
+
+
+
+<label>
+Brand
+</label>
+
+
+<select name="brand">
+
+
+{% for k,v in brand.items() %}
+
+
+<option value="{{k}}">
+{{k}}
+</option>
+
+
+{% endfor %}
+
+
+</select>
+
+
+
+
+
+
+
+<label>
+Color
+</label>
+
+
+<select
+name="color"
+id="colorSelect">
+
+
+{% for k,v in colors.items() %}
+
+
+<option value="{{k}}">
+{{k}}
+</option>
+
+
+{% endfor %}
+
+
+</select>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h3>
+Vehicle Preview
+</h3>
+
+
+
+<div class="car-preview-container">
+
+
+<img
+
+id="carPreview"
+
+src="{{ url_for('static', filename='cars/sedan.png') }}"
+
+>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h3>
+Wash Service
+</h3>
+
+
+
+<label>
+Wash Type
+</label>
+
+
+<select name="wash">
+
+
+{% for k,v in washes.items() %}
+
+
+<option value="{{k}}">
+{{k}}
+</option>
+
+
+{% endfor %}
+
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+
+<button type="submit">
+
+💰 Confirm Booking
+
+</button>
+
+
+
+
+</form>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="right">
+
+
+
+<div class="box">
+
+
+<h3>
+System Status
+</h3>
+
+
+<div class="status">
+
+✔ Booking System Active
+
+✔ Telegram Alerts ON
+
+✔ PDF Receipt Active
+
+✔ SQLite Connected
+
+✔ Render Ready
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<div class="box">
+
+
+<h3>
+After Booking
+</h3>
+
+
+<div class="status">
+
+✔ Booking Saved
+
+✔ Telegram Sent
+
+✔ PDF Generated
+
+✔ Download Available
+
+</div>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+
+
+const carSelect =
+document.getElementById("carSelect");
+
+
+const colorSelect =
+document.getElementById("colorSelect");
+
+
+const carPreview =
+document.getElementById("carPreview");
+
+
+
+
+
+const colorMap = {
+
+
+"Black":
+
+"brightness(0.25)",
+
+
+
+"White":
+
+"brightness(1.8)",
+
+
+
+"Red":
+
+"sepia(1) saturate(8) hue-rotate(320deg)",
+
+
+
+"Blue":
+
+"sepia(1) saturate(6) hue-rotate(180deg)"
+
+
+
+};
+
+
+
+
+
+
+function updatePreview(){
+
+
+let car =
+carSelect.value;
+
+
+
+let color =
+colorSelect.value;
+
+
+
+
+
+if(car === "MPV"){
+
+
+carPreview.src =
+
+"{{ url_for('static', filename='cars/mpv.png') }}";
+
+
+}
+
+else{
+
+
+carPreview.src =
+
+"{{ url_for('static', filename='cars/sedan.png') }}";
+
+
+}
+
+
+
+
+
+
+carPreview.style.filter =
+
+"drop-shadow(0 10px 12px rgba(0,0,0,0.6)) "
++
+colorMap[color];
+
+
+
+}
+
+
+
+
+
+
+
+carSelect.addEventListener(
+"change",
+updatePreview
+);
+
+
+
+colorSelect.addEventListener(
+"change",
+updatePreview
+);
+
+
+
+
+updatePreview();
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
 
 
 

@@ -58,11 +58,11 @@ BRAND = {
 
 WASH = {
 
-    "Interior Pro A - small":240,
+    "Interior Pro A - Small":240,
 
-    "Interior Pro B - large":550,
+    "Interior Pro B - Large":550,
 
-    "Interior Pro C - large plus":900
+    "Interior Pro C - Large plus":900
 
 }
 

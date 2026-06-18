@@ -11,8 +11,8 @@ app = Flask(__name__)
 
 # TELEGRAM
 
-BOT_TOKEN = "YOUR_TOKEN"
-CHAT_ID = "YOUR_CHAT_ID"
+BOT_TOKEN = "8716076962:AAHpIFuyq7Jq51Gy4Dj9PsPexClS-v04-Oo"
+CHAT_ID = "723175483"
 
 
 def telegram(msg):
@@ -58,11 +58,11 @@ BRAND = {
 
 WASH = {
 
-    "Basic Wash":10,
+    "Interior Pro A - small":240,
 
-    "Premium Wash":20,
+    "Interior Pro B - large":550,
 
-    "Full Detail":40
+    "Interior Pro C - large plus":900
 
 }
 

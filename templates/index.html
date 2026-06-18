@@ -1,96 +1,876 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Booking Success - 6ixNine9 Motorsport</title>
 
-    <style>
+<title>6ixNine9 Motorsport Booking</title>
 
-        body {
-            margin: 0;
-            background: #0f0f0f;
-            color: white;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
 
-        .box {
-            background: #1b1b1b;
-            padding: 40px;
-            border-radius: 12px;
-            text-align: center;
-            width: 450px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-        }
+<style>
 
-        .success {
-            font-size: 30px;
-            color: #4CAF50;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
 
-        .booking-id {
-            background: #2b2b2b;
-            padding: 12px;
-            border-radius: 8px;
-            margin: 20px 0;
-            font-size: 18px;
-        }
+body {
 
-        .button {
-            display: block;
-            width: 100%;
-            box-sizing: border-box;
-            margin-top: 15px;
-            padding: 14px;
-            background: #1f6aa5;
-            color: white;
-            text-decoration: none;
-            border-radius: 6px;
-            font-weight: bold;
-        }
+    margin:0;
+    font-family:Arial;
+    background:#0f0f0f;
+    color:white;
 
-        .button:hover {
-            background: #1590ff;
-        }
+}
 
-        .info {
-            color: #cccccc;
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
 
-    </style>
+
+.header {
+
+    text-align:center;
+    padding:15px;
+    background:#1c1c1c;
+    font-size:22px;
+    font-weight:bold;
+
+}
+
+
+
+.container {
+
+    display:flex;
+    min-height:90vh;
+
+}
+
+
+
+.left,.right {
+
+    flex:1;
+    padding:20px;
+
+}
+
+
+
+.box {
+
+    background:#1b1b1b;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:15px;
+
+}
+
+
+
+input,select {
+
+
+    width:100%;
+    padding:10px;
+
+    margin-top:5px;
+    margin-bottom:10px;
+
+    border:none;
+    border-radius:5px;
+
+    background:#2b2b2b;
+
+    color:white;
+
+
+}
+
+
+
+button {
+
+
+    width:100%;
+
+    padding:12px;
+
+    background:#1f6aa5;
+
+    border:none;
+
+    border-radius:5px;
+
+    color:white;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+
+}
+
+
+
+button:hover {
+
+
+    background:#1590ff;
+
+
+}
+
+
+
+
+.status {
+
+    white-space:pre-line;
+
+    color:#ccc;
+
+    font-size:13px;
+
+}
+
+
+
+
+#colorPreview {
+
+
+    width:100%;
+
+    height:120px;
+
+    border-radius:10px;
+
+    border:2px solid #444;
+
+}
+
+
+
+
+
+#packageInfo {
+
+
+    background:#111;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    line-height:1.6;
+
+}
+
+
+
+
+</style>
+
+
 </head>
+
+
 <body>
 
-<div class="box">
 
-    <div class="success">
-        ✔ Booking Successful
-    </div>
 
-    <p class="info">
-        Thank you for choosing 6ixNine9 Motorsport.
-    </p>
 
-    <div class="booking-id">
-        Booking ID:<br>
-        <b>{{ booking_id }}</b>
-    </div>
+<div class="header">
 
-    <a class="button" href="{{ pdf_url }}" download>
-        📄 Download Invoice PDF
-    </a>
-
-    <a class="button" href="/">
-        🔙 Back To Home
-    </a>
+🦈 6ixNine9 Motorsport Booking System
 
 </div>
 
+
+
+
+
+
+
+<div class="container">
+
+
+
+
+
+<!-- LEFT -->
+
+
+<div class="left">
+
+
+
+
+
+<form action="/book" method="POST">
+
+
+
+
+
+<div class="box">
+
+
+<h3>
+
+Customer Info
+
+</h3>
+
+
+
+
+<input
+
+name="name"
+
+placeholder="Customer Name"
+
+required>
+
+
+
+
+<input
+
+name="phone"
+
+placeholder="Phone Number"
+
+required>
+
+
+
+
+<input
+
+name="plate"
+
+placeholder="Car Plate"
+
+required>
+
+
+
+
+
+<label>
+
+Appointment Date
+
+</label>
+
+
+
+<input
+
+type="date"
+
+name="date"
+
+required>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h3>
+
+Vehicle Option
+
+</h3>
+
+
+
+
+
+<label>
+
+Car Type
+
+</label>
+
+
+
+<select name="car">
+
+
+{% for k,v in cars.items() %}
+
+
+<option value="{{k}}">
+
+{{k}}
+
+</option>
+
+
+{% endfor %}
+
+
+</select>
+
+
+
+
+
+
+
+
+
+<label>
+
+Brand
+
+</label>
+
+
+
+
+<select name="brand">
+
+
+{% for k,v in brand.items() %}
+
+
+<option value="{{k}}">
+
+{{k}}
+
+</option>
+
+
+{% endfor %}
+
+
+</select>
+
+
+
+
+
+
+
+
+
+<label>
+
+Colour
+
+</label>
+
+
+
+
+<select
+
+name="color"
+
+id="colorSelect">
+
+
+{% for k,v in colors.items() %}
+
+
+<option value="{{k}}">
+
+{{k}}
+
+</option>
+
+
+{% endfor %}
+
+
+</select>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h3>
+
+Colour Preview
+
+</h3>
+
+
+
+<div id="colorPreview"></div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h3>
+
+Interior Package
+
+</h3>
+
+
+
+<label>
+
+Select Package
+
+</label>
+
+
+
+
+
+<select
+
+name="wash"
+
+id="washSelect">
+
+
+
+{% for k,v in washes.items() %}
+
+
+
+<option value="{{k}}">
+
+
+{{k}} - RM{{v}}
+
+
+</option>
+
+
+
+{% endfor %}
+
+
+
+
+</select>
+
+
+
+
+
+
+
+<h4>
+
+Package Includes:
+
+</h4>
+
+
+
+<div id="packageInfo">
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<button type="submit">
+
+💰 Confirm Booking
+
+</button>
+
+
+
+
+
+
+</form>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- RIGHT -->
+
+
+<div class="right">
+
+
+
+
+
+<div class="box">
+
+
+<h3>
+
+System Status
+
+</h3>
+
+
+
+<div class="status">
+
+
+✔ Booking System Active
+
+✔ Telegram Alert ON
+
+✔ PDF Invoice Active
+
+✔ SQLite Database Connected
+
+✔ Render Ready
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h3>
+
+After Booking
+
+</h3>
+
+
+
+<div class="status">
+
+
+✔ Booking saved
+
+✔ Telegram notification sent
+
+✔ Invoice generated
+
+✔ Download button shown
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="box">
+
+
+<h3>
+
+Notes
+
+</h3>
+
+
+
+<div class="status">
+
+
+- Check customer details
+
+- Select correct package
+
+- Submit once only
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<script>
+
+
+
+const colorSelect =
+
+document.getElementById("colorSelect");
+
+
+
+const colorPreview =
+
+document.getElementById("colorPreview");
+
+
+
+
+const washSelect =
+
+document.getElementById("washSelect");
+
+
+
+const packageInfo =
+
+document.getElementById("packageInfo");
+
+
+
+
+
+
+
+const colorMap = {
+
+
+"Black":"#080808",
+
+"White":"#eeeeee",
+
+"Red":"#c00000",
+
+"Blue":"#0047ab"
+
+
+};
+
+
+
+
+
+
+
+
+function updateColor(){
+
+
+let c = colorSelect.value;
+
+
+colorPreview.style.background = colorMap[c];
+
+
+}
+
+
+
+
+
+
+
+
+
+const packages = {
+
+
+"No":
+
+`
+No detailing selected
+`,
+
+
+
+
+"Interior Pro A - Small":
+
+`
+✔ Basic interior cleaning
+<br>
+✔ Dashboard wipe
+<br>
+✔ Vacuum
+`,
+
+
+
+
+
+"Interior Pro B - Large":
+
+`
+✔ Deep interior cleaning
+<br>
+✔ Full vacuum
+<br>
+✔ Dashboard treatment
+<br>
+✔ Interior finishing
+`,
+
+
+
+
+
+"Interior Pro C - Large plus":
+
+`
+✔ Premium interior restoration
+<br>
+✔ Leather treatment
+<br>
+✔ Deep cleaning
+<br>
+✔ Full finishing
+`
+
+};
+
+
+
+
+
+
+
+
+function updatePackage(){
+
+
+let p = washSelect.value;
+
+
+packageInfo.innerHTML = packages[p] || "";
+
+
+
+}
+
+
+
+
+
+
+
+
+colorSelect.addEventListener(
+
+"change",
+
+updateColor
+
+);
+
+
+
+
+washSelect.addEventListener(
+
+"change",
+
+updatePackage
+
+);
+
+
+
+
+
+
+updateColor();
+
+updatePackage();
+
+
+
+
+
+</script>
+
+
+
+
+
 </body>
+
+
 </html>

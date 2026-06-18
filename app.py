@@ -610,19 +610,13 @@ TOTAL: RM {total}
 """)
 
 
-
-
-
-
-
-return f"""
+    return f"""
 <!DOCTYPE html>
 <html>
 
 <head>
 
 <title>Booking Success</title>
-
 
 <style>
 
@@ -637,62 +631,44 @@ body {{
     height:100vh;
 }}
 
-
 .box {{
 
     background:#1b1b1b;
-
     padding:40px;
-
     border-radius:12px;
-
     text-align:center;
-
     width:350px;
 
 }}
 
-
 h2 {{
 
-    color:#4CAF50;
+color:#4CAF50;
 
 }}
-
 
 
 .button {{
 
-    display:block;
-
-    margin-top:20px;
-
-    padding:14px;
-
-    background:#1f6aa5;
-
-    color:white;
-
-    text-decoration:none;
-
-    border-radius:6px;
-
-    font-weight:bold;
+display:block;
+margin-top:20px;
+padding:14px;
+background:#1f6aa5;
+color:white;
+text-decoration:none;
+border-radius:6px;
+font-weight:bold;
 
 }}
-
 
 
 .button:hover {{
 
-    background:#1590ff;
+background:#1590ff;
 
 }}
 
-
-
 </style>
-
 
 </head>
 
@@ -708,7 +684,6 @@ h2 {{
 </h2>
 
 
-
 <p>
 Booking ID:
 </p>
@@ -719,34 +694,20 @@ Booking ID:
 </h3>
 
 
-
-
-
 <a class="button" href="{pdf_url}" download>
-
 📄 Download Invoice PDF
-
 </a>
-
-
-
 
 
 <a class="button" href="/">
-
 🔙 Back Home
-
 </a>
-
-
-
 
 
 </div>
 
 
 </body>
-
 
 </html>
 

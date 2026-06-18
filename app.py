@@ -36,6 +36,8 @@ def telegram(msg):
 
 CAR_TYPES = {
 
+    "No":0,
+    
     "Sedan":2000,
 
     "MPV":2300
@@ -46,11 +48,11 @@ CAR_TYPES = {
 
 BRAND = {
 
-    "KTN":500,
+    "No":0,
 
     "NAKA FILM PET":1000,
 
-    "No Wrap":0
+    "KTN":500
 
 }
 
